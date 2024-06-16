@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="quiz1.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(154, 120, 185);
+}
+
+.quiz-container {
+    margin-left: 400px;
+    margin-top: 100px;
+    padding-left: 50px;
+
+   
+   width:600px;
+   height:400px;
+   border-color: black;
+   border-width:6px ;
+   border-style:solid ;
+   background-color: aliceblue;
+   border-radius: 30px;
+}
+
+h1 {
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+#options button {
+    margin: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    border-radius: 10px;
+   
+}
+#options button:hover{
+    background-color: black;
+    color:white;
+}
+
+#next-btn {
+    margin-top: 20px;
+    text-align: center;
+    height: 50px;
+    width: 120px;
+    font-size: 17px;
+    margin-left: 940px;
+}
+
+#op-container{
+
+   
+    padding-left: 70px;
+}
+#result{
+    margin-top:100x;
+    font-size: large;
+    margin-left: 40px;
+   
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>World search</h1>
+        <div id="question"></div>
+        <div id="op-container">
+        <div id="options"></div>
+        <div id="result"></div>
+        </div>
+    </div>
+    <button id="next-btn">Next</button>
+    <script >const quizData = [
+        {
+            question: "1.Which is the largest country in the World?",
+            options: ["Russia", "America", "India", "China"],
+            answer: "Russia"
+        },
+       
+        {
+            question: "2.What is the capital of France?",
+            options: ["Paris", "London", "Berlin", "Rome"],
+            answer: "Paris"
+        },
+        {
+            question: "3.Which planet is known as the Red Planet?",
+            options: ["Jupiter", "Mars", "Saturn", "Venus"],
+            answer: "Mars"
+        },
+        {
+            question: "4.What is the chemical symbol for water?",
+            options: ["H2O", "CO2", "NaCl", "O2"],
+            answer: "H2O"
+        },
+{
+    question: "5.Which continent is known as the 'Land of the Rising Sun'?",
+    options: ["Asia", "Europe", "North America", "Australia"],
+    answer: "Asia"
+}
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const nextButton = document.getElementById('next-btn');
+    const resultElement = document.getElementById('result');
+    
+    function loadQuestion() {
+        const currentQuizData = quizData[currentQuestion];
+        questionElement.innerText = currentQuizData.question;
+    
+        optionsElement.innerHTML = '';
+        currentQuizData.options.forEach(option => {
+            const button = document.createElement('button');
+            button.innerText = option;
+            button.classList.add('option-btn');
+            button.addEventListener('click', () => checkAnswer(option));
+            optionsElement.appendChild(button);
+        });
+    }
+    
+    function checkAnswer(answer) {
+        const currentQuizData = quizData[currentQuestion];
+        if (answer === currentQuizData.answer) {
+            score++;
+        }
+    
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+    
+    function showResult() {
+        questionElement.innerText = '';
+        optionsElement.innerHTML = '';
+        nextButton.style.display = 'none';
+    
+        // Create image element
+        const happyImage = document.createElement('img');
+        happyImage.src = 'https://tse4.mm.bing.net/th?id=OIP.ObafAoXNoml5kwOsNckVoQHaHa&pid=Api&P=0&h=180'; // Replace 'path/to/happy-image.jpg' with the actual path to your happy image
+        happyImage.alt = 'Happy Image';
+    
+        // Append image element to resultElement
+        resultElement.appendChild(happyImage);
+    
+        // Display the user's final score
+        resultElement.innerHTML += `<p>You scored ${score} out of ${quizData.length}.</p>`;
+    }
+    
+    loadQuestion();
+    
+    
+    </script>
+</body>
+</html>
+
